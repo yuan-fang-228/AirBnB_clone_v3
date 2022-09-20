@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """the first endpoint to return API status"""
-from flask import Flask, Blueprint, render_template
+from flask import Flask, Blueprint, render_template, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -13,6 +13,12 @@ app.register_blueprint(app_views)
 def close_currentsession(exc):
     """remove current session"""
     storage.close()
+
+
+@app.errorhandler(404)
+def handler_404(e):
+    """return json when page not found"""
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
