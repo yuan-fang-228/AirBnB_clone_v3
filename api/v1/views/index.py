@@ -20,7 +20,7 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/api/v1/stats")
+@app_views.route("/stats")
 def show_stats():
     """show the number of each objects by type"""
     results = {}
