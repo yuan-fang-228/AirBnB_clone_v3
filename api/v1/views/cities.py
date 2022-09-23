@@ -40,7 +40,7 @@ def show_cities_by_State(state_id=None):
         return jsonify(new_city.to_dict()), 201
 
 
-@app_views.route('/api/v1/cities/<city_id>',
+@app_views.route('/cities/<city_id>',
                  strict_slashes=False,
                  methods=['GET', 'PUT', 'DELETE'])
 def show_city(city_id=None):
@@ -64,6 +64,6 @@ def show_city(city_id=None):
         return jsonify(obj_city.to_dict()), 200
 
     if request.method == 'DELETE':
-        storage.delete(city_id)
+        storage.delete(obj_city)
         storage.save()
         return jsonify({}), 200
