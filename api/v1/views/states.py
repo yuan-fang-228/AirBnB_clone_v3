@@ -30,7 +30,9 @@ def show_all_states():
         return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET', 'PUT', 'DELETE'])
+@app_views.route('/states/<state_id>',
+                 strict_slashes=False,
+                 methods=['GET', 'PUT', 'DELETE'])
 def show_single_state(state_id=None):
     """retrieve state by id"""
     if state_id is None:
