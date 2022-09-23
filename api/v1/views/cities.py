@@ -13,7 +13,9 @@ from flask import abort, request, jsonify
                  strict_slashes=False,
                  methods=['GET', 'POST'])
 def show_cities_by_State(state_id=None):
-    """show all the cities of the given state"""
+    """request: GET - return all city objects in json of the given state_id
+
+       request: POST - create new city in given state and return it in json"""
     if state_id is None:
         abort(404)
     obj_state = storage.get(State, state_id)
@@ -44,7 +46,12 @@ def show_cities_by_State(state_id=None):
                  strict_slashes=False,
                  methods=['GET', 'PUT', 'DELETE'])
 def show_city(city_id=None):
-    """show the city based on given city_id"""
+    """request: GET - return the city of given city_id in Json
+
+       request: PUT - update the city object and return it in json
+
+       request: DELETE - delete one city of given city_id and return empty dict
+    """
     if city_id is None:
         abort(404)
     obj_city = storage.get(City, city_id)

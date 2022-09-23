@@ -10,7 +10,10 @@ from flask import abort, request, jsonify
 
 @app_views.route('/states', strict_slashes=False, methods=['GET', 'POST'])
 def show_all_states():
-    """list all the state objects"""
+    """request: GET - list all the state objects
+
+       request: POST - create a new state onject and return new object in json
+    """
     if request.method == 'GET':
         list_states = []
         obj_states = storage.all(State)
@@ -34,7 +37,12 @@ def show_all_states():
                  strict_slashes=False,
                  methods=['GET', 'PUT', 'DELETE'])
 def show_single_state(state_id=None):
-    """retrieve state by id"""
+    """request: GET - list one state object based on given state_id
+
+       request: PUT - update state info and return updated object in json
+
+       request: DELETE - delete a state based on given state_id
+    """
     if state_id is None:
         abort(404)
     obj_state = storage.get(State, state_id)
