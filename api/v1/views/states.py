@@ -11,7 +11,7 @@ from flask import abort, request, jsonify
 @app_views.route('/states', methods=['GET', 'POST'])
 def show_all_states():
     """list all the state objects"""
-    if request.methods == 'GET':
+    if request.method == 'GET':
         list_states = []
         obj_states = storage.all(State)
         for key, value in obj_states.items():
@@ -19,11 +19,11 @@ def show_all_states():
             list_states.append(state_json)
         return jsonify(list_states)
 
-    if request.methods == 'POST':
+    if request.method == 'POST':
         body_request = request.get_json()
         if not body_request:
             abort(400, 'Not a JSON')
-        if name not in body_request.keys():
+        if 'name' not in body_request.keys():
             abort(400, 'Missing name')
         new_state = State(**body_request)
         new_state.save()
@@ -36,11 +36,11 @@ def show_single_state(state_id=None):
     if state_id is None:
         abort(404)
     obj_state = storage.get(State, state_id)
-    if ob_state is None:
+    if obj_state is None:
         abort(404)
-    if request.methods == 'GET':
+    if request.method == 'GET':
         return jsonify(obj_state.to_dict())
-    if request.methods == 'PUT':
+    if request.method == 'PUT':
         update_state = request.get_json()
         if not update_state:
             abort(400, 'Not a JSON')
@@ -49,7 +49,7 @@ def show_single_state(state_id=None):
                 setattr(obj_state, key, value)
         obj_state.save()
         return jsonify(obj_state.to_dict()), 200
-    if request.methods == 'DELETE':
+    if request.method == 'DELETE':
         storage.delete(obj_state)
         storage.save()
         return jsonify({}), 200
