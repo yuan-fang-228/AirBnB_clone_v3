@@ -56,7 +56,7 @@ def show_single_user(user_id=None):
         update_user = request.get_json()
         if not update_user:
             abort(400, 'Not a JSON')
-        for key, value in update_amenity.items():
+        for key, value in update_user.items():
             if key not in ['id', 'email', 'created_at', 'updated_at']:
                 setattr(obj_user, key, value)
         obj_user.save()
