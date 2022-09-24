@@ -7,6 +7,7 @@ from models import storage
 from flask import abort, request, jsonify
 from models.place import Place
 from models.review import Review
+from models.user import User
 
 
 @app_views.route('/places/<place_id>/reviews',
@@ -37,7 +38,7 @@ def show_reviews(place_id=None):
             abort(400, 'Not a JSON')
         if 'user_id' not in body_request.keys():
             abort(400, 'Missing user_id')
-        if storage.get(Review, body_request['user_id']) is None:
+        if storage.get(User, body_request['user_id']) is None:
             abort(400)
         if 'text' not in body_request.keys():
             abort(400, 'Missing text')
