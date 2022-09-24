@@ -39,7 +39,7 @@ def show_all_places(city_id=None):
             abort(400, 'Missing user_id')
         if 'name' not in body_request.keys():
             abort(400, 'Missing name')
-        if storage.all(User)['user_id'] is None:
+        if storage.get(User, body_request['user_id']) is None:
             abort(404)
         new_place = Place(**body_request)
         new_place.city_id = city_id
