@@ -19,7 +19,7 @@ def show_all_places(city_id=None):
     """
     if city_id is None:
         abort(404)
-    obj_city = storage(City, city_id)
+    obj_city = storage.get(City, city_id)
     if obj_city is None:
         abort(404)
 
@@ -55,7 +55,7 @@ def show_place(place_id=None):
 
        request: PUT - update the place object and return it in json
 
-       request: DELETE - delete one place of given place_id and return empty dict
+       request: DELETE - delete a place of given place_id and return empty dict
     """
     if place_id is None:
         abort(404)
@@ -70,7 +70,8 @@ def show_place(place_id=None):
         if not update_place:
             abort(400, 'Not a JSON')
         for key, value in update_place.items():
-            if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+            if key not in ['id', 'user_id', 'city_id',
+                           'created_at', 'updated_at']:
                 setattr(obj_place, key, value)
         obj_place.save()
         return jsonify(obj_place.to_dict()), 200
