@@ -33,16 +33,18 @@ def show_all_places(city_id=None):
 
     if request.method == 'POST':
         body_request = request.get_json()
+        user_id = body_request['user_id']
         if not body_request:
             abort(400, 'Not a JSON')
         if 'user_id' not in body_request.keys():
             abort(400, 'Missing user_id')
         if 'name' not in body_request.keys():
             abort(400, 'Missing name')
-        if storage.get(User, body_request['user_id']) is None:
+        if storage.get(User, user_id) is None:
             abort(404)
         new_place = Place(**body_request)
         new_place.city_id = city_id
+        new_place.user_id = user_id
         new_place.save()
         return jsonify(new_place.to_dict()), 201
 
