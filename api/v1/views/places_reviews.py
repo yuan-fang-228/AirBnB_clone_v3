@@ -39,7 +39,7 @@ def show_reviews(place_id=None):
         if 'user_id' not in body_request.keys():
             abort(400, 'Missing user_id')
         if storage.get(User, body_request['user_id']) is None:
-            abort(400)
+            abort(404)
         if 'text' not in body_request.keys():
             abort(400, 'Missing text')
         new_review = Review(**body_request)
