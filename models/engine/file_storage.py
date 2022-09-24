@@ -39,7 +39,7 @@ class FileStorage:
         if cls in classes.values():
             obj = self.all(cls)
             for key, value in obj.items():
-                if id in key:
+                if key == cls.__name__ + '.' + id:
                     return value
         return None
 
